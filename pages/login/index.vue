@@ -46,6 +46,7 @@
 
     const Cookie = process.client ? require('js-cookie') : undefined
     export default {
+        middleware: 'notAuth',
         name: "login",
         computed: {
             isLogin() {
