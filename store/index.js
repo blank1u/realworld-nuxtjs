@@ -26,7 +26,8 @@ export const actions = {
     //
     nuxtServerInit({commit}, {req}) {
         let user = null
-        if (req.headers.cookie) {
+        // https://github.com/nuxt-community/nuxt-i18n/issues/53
+        if (req && req.headers && req.headers.cookie) {
             const parsed = cookieparser.parse(req.headers.cookie)
             try {
                 user = JSON.parse(parsed.user)
@@ -36,5 +37,4 @@ export const actions = {
         }
         commit('setUser', user)
     }
-
 }
