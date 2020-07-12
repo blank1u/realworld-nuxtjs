@@ -26,7 +26,8 @@
                                    placeholder="Email">
                         </fieldset>
                         <fieldset class="form-group">
-                            <input minlength="8" required v-model="user.password" class="form-control form-control-lg" type="password"
+                            <input minlength="8" required v-model="user.password" class="form-control form-control-lg"
+                                   type="password"
                                    placeholder="Password">
                         </fieldset>
                         <button class="btn btn-lg btn-primary pull-xs-right">
@@ -43,6 +44,7 @@
 <script>
     import {login, register} from '../../api/login'
 
+    const Cookie = process.client ? require('js-cookie') : undefined
     export default {
         name: "login",
         computed: {
@@ -74,7 +76,9 @@
                     user: this.user
                 }
                 try {
-                    const {data} = await login(raw)
+                    const {data: {user}} = await login(raw)
+                    this.$store.commit('setUser', user)
+                    Cookie.set('user', user)
                     this.$router.push('/')
                 } catch (e) {
                     this.errors = e.response.data.errors
