@@ -1,4 +1,4 @@
-import request from "../pages/utils/request";
+import request from "../utils/request";
 
 
 export const login = data => {
