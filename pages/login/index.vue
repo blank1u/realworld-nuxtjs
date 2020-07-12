@@ -11,18 +11,23 @@
                     </p>
 
                     <ul class="error-messages">
-                        <li>That email is already taken</li>
+                        <template v-for="(messages,field) in errors">
+                            <li v-for="item in messages">{{field}}{{item}}</li>
+                        </template>
                     </ul>
 
-                    <form>
+                    <form @submit.prevent="handelSubmit">
                         <fieldset v-if="!isLogin" class="form-group">
-                            <input class="form-control form-control-lg" type="text" placeholder="Your Name">
+                            <input v-model="user.username" required class="form-control form-control-lg" type="text"
+                                   placeholder="Your Name">
                         </fieldset>
                         <fieldset class="form-group">
-                            <input class="form-control form-control-lg" type="text" placeholder="Email">
+                            <input v-model="user.email" class="form-control form-control-lg" type="email"
+                                   placeholder="Email">
                         </fieldset>
                         <fieldset class="form-group">
-                            <input class="form-control form-control-lg" type="password" placeholder="Password">
+                            <input minlength="8" required v-model="user.password" class="form-control form-control-lg" type="password"
+                                   placeholder="Password">
                         </fieldset>
                         <button class="btn btn-lg btn-primary pull-xs-right">
                             {{isLogin?'Sign in':'Sign up'}}
@@ -36,11 +41,56 @@
 </template>
 
 <script>
+    import {login, register} from '../../api/login'
+
     export default {
         name: "login",
         computed: {
             isLogin() {
                 return this.$route.name === 'Login'
+            }
+        },
+        data: () => {
+            return {
+                user: {
+                    email: "",
+                    password: "",
+                    username: "",
+                },
+                errors: {}
+            }
+        },
+        methods: {
+            handelSubmit() {
+                if (this.isLogin) {
+                    this.login()
+                } else {
+                    this.users()
+                }
+            },
+            async login() {
+                delete this.user.username
+                const raw = {
+                    user: this.user
+                }
+                try {
+                    const {data} = await login(raw)
+                    this.$router.push('/')
+                } catch (e) {
+                    this.errors = e.response.data.errors
+                }
+            },
+            async users() {
+                const raw = {
+                    user: this.user
+                }
+                try {
+                    const {data} = await register(raw)
+                    this.$router.push('/login')
+                } catch (e) {
+                    this.errors = e.response.data.errors
+                }
+
             }
         }
     }
