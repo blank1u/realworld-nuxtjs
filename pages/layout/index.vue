@@ -9,7 +9,7 @@
                         <!-- Add "active" class when you're on that page" -->
                     </li>
                     <li class="nav-item">
-                        <nuxt-link class="nav-link" to="/editor/11">
+                        <nuxt-link class="nav-link" to="/editor">
                             <i class="ion-compose"></i>&nbsp;New Article
                         </nuxt-link>
                     </li>
@@ -21,7 +21,7 @@
                     <li class="nav-item">
                         <nuxt-link
                                 class="nav-link"
-                                :to="{name:'Profile'}">
+                                :to="{ name: 'Profile', params: { username: `@${user.username}` }}">
                             <img :src="user.image" class="user-pic">{{user.username}}
                         </nuxt-link>
                     </li>

@@ -37,12 +37,12 @@ export default {
                     },
                     {
                         name: 'Article',
-                        path: '/article/:id',
+                        path: '/article',
                         component: resolve(__dirname, 'pages/article/index.vue'),
                     },
                     {
                         name: 'Editor',
-                        path: '/editor/:id',
+                        path: '/editor',
                         component: resolve(__dirname, 'pages/editor/index.vue'),
                     }
                 ]

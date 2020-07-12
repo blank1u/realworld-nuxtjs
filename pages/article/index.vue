@@ -124,7 +124,7 @@
 
 <script>
     export default {
-        name: "article"
+        name: "ArticleIndex"
     }
 </script>
 
