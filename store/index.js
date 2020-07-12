@@ -13,6 +13,17 @@ export const mutations = {
 
 export const actions = {
 
+    /**
+     *
+     *  这个方法会在服务器渲染时被自动调用
+     *  Nuxt特有的action函数，解决 JWT 问题
+     *  https://zh.nuxtjs.org/examples/auth-external-jwt
+     *  作用：初始化容器数据，传递数据给客户端使用
+     * @param commit
+     * @param req
+     */
+    //
+    //
     nuxtServerInit({commit}, {req}) {
         let user = null
         if (req.headers.cookie) {
